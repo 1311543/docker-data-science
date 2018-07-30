@@ -1,14 +1,17 @@
 FROM ubuntu
 MAINTAINER francis de la cruz :v1
-RUN apt-get update && yes|apt-get update
-RUN apt-get install -y wget bzip2
+RUN apt-get update && yes|apt-get update && \
+        apt-get install -y wget bzip2        
+#RUN apt-get install -y wget bzip2
 RUN wget https://repo.continuum.io/archive/Anaconda3-5.0.1-Linux-x86_64.sh
 RUN bash Anaconda3-5.0.1-Linux-x86_64.sh -b
 RUN rm Anaconda3-5.0.1-Linux-x86_64.sh
 ENV PATH /root/anaconda3/bin:$PATH
-RUN conda update conda -y && \
-            conda update anaconda -y && \
-            conda update --all
+#RUN conda update conda -y && \
+#      conda update anaconda -y && \
+#       conda update --all
+RUN jupyter notebook --generate-config --allow-root
+RUN echo "c.NotebookApp.password = u'sha1:67c9e60bb8b6:9ffede0825894254b2e042ea597d771089e11aed'" >> /root/.jupyter/jupyter_notebook_config.py
 RUN mkdir /opt/notebooks
 WORKDIR /opt/notebooks
 ADD ./Jupiter_notebooks* /opt/notebooks
