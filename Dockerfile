@@ -30,7 +30,7 @@ RUN echo "c.NotebookApp.keyfile = u'/absolute/path/to/your/certificate/privkey.p
 WORKDIR /opt/notebooks
 ADD ./Jupiter_notebooks* /opt/notebooks
 # ACCEDER DESDE FUERA DEL CONTAINER
-EXPOSE 8888
+EXPOSE  
 CMD ["jupyter", "notebook", "--allow-root", "--notebook-dir=/opt/notebooks", "--ip='*'", "--port=8888", "--no-browser"]
 
 
@@ -61,7 +61,22 @@ CMD ["jupyter", "notebook", "--allow-root", "--notebook-dir=/opt/notebooks", "--
 #docker container prune	Remove all stopped containers
 
 
-#  docker build -t anaconda_v5:latest /home/francis/Escritorio/AnacondaDockerfile
+#  docker build -t anaconda_v1:latest /home/francis/Escritorio/AnacondaDockerfile
+
+#  docker build -t anaconda_v1:latest --volume anaconda \
+# /home/francis/Proyectos/DockerFIles/docker-data-science
+
 # --rm		Automatically remove the container when it exits
-# docker run --rm -it -p 80 docker build -t anaconda_v5:latest
-#docker run --rm -it -p docker build -t anaconda_v5:latest
+# docker run --name anaconda_v1:latest --rm -it -p 80 docker build -t anaconda_v5:latest
+#docker run --rm -it -p anaconda_v5:latest
+
+#docker run -d --name unkkuri-odoo --link unkkuri-db:db -p 8069:8069 \
+ # --network unkkuri-odoo-nw \
+ # --mount source=unkkuri-odoo-data,target=/var/lib/odoo \
+ # --mount source=unkkuri-odoo-extra-addons,target=/mnt/extra-addons \
+ # --env POSTGRES_PASSWORD=unkkuri-secret-pw \odoo:11.0
+
+  docker run --rm -it -P \
+  --name anaconda_v1:latest \
+  --mount source=anaconda,target=/home/francis/Proyectos/DockerFIles/docker-data-science/app \
+  data_science_anaconda
